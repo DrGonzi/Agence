@@ -1,0 +1,44 @@
+
+{% extends "base.html.twig" %}
+
+{% block title "Agence tous risque" %}
+
+{% block body %}
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Agence tous risque</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis malesuada odio. Pellentesque habitant morbi tristique 
+        senectus et netus et malesuada fames ac turpis egestas. Aenean pharetra quis felis fermentum tincidunt. Suspendisse neque 
+        erat, volutpat sed convallis sit amet, condimentum quis dui. Aliquam molestie ornare sodales. Donec quis mollis lectus, quis 
+        egestas ante. Ut vestibulum erat quis dui molestie imperdiet.</p>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Nos Dernier biens</h2>
+    <div class="row flex">
+        {% for property in properties %}
+            <div class="col-3">
+                <div class="card">
+                {% if property.filename %}
+                    <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="card-img-top" style="width: 100%; height: auto;">
+                {% else %}
+
+                    <img src="{{ '/images/properties/empty.jpeg' | imagine_filter('thumb') }}" alt="card-img-top" style="width: 100%; height: auto;">
+                {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ path('property.show', {id: property.id, slug: property.slug}) }}">{{property.title}}</a>
+                        </h5>
+                        <p class="card-text">{{property.city}} ({{property.postalCode}})</p>
+                        <p class="card-text text-primary" style="font-weight: bold; font-size: 2em">{{property.formattedPrice}} €</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
